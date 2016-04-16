@@ -57,7 +57,7 @@ Public Class Form1
     Public Function func(ByRef x As Single)
         Dim y As Single
         Try
-            y = Math.Tan(x)
+            y = Math.Tan(Math.Sin(x))
         Catch ex As System.OverflowException
             y = 0
         End Try
@@ -78,7 +78,7 @@ Public Class Form1
             Dim a As Single = 0.05
             g.DrawLine(myPen, -a, y1, a, y1)
         Next
-        For x As Single = X_LeftTop To X_RightDown Step 0.1
+        For x As Single = X_LeftTop To X_RightDown Step 0.01
             Dim y As Single = func(x)
             Dim x2 As Single = x + 0.1
             Dim y2 As Single = func(x2)
