@@ -5,6 +5,20 @@ Public Class Form1
     Dim s As Integer
     Dim px1 As Integer, py1 As Integer
     Dim g1 As Graphics
+
+    Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
+        If e.KeyCode = Keys.Home Then
+            X_LeftTop = -20
+            Y_LeftTop = 20
+            X_RightDown = 20
+            Y_RightDown = -20
+            g1 = Me.CreateGraphics()
+            Scale(X_LeftTop, Y_LeftTop, X_RightDown, Y_RightDown, g1)
+            print(g1)
+        End If
+    End Sub
+
+    
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         X_LeftTop = -20
         Y_LeftTop = 20
@@ -24,8 +38,8 @@ Public Class Form1
         Y_LeftTop += -(Last_Y - e.Y) / (Me.Height / (Math.Abs(Y_LeftTop - Y_RightDown)))
         X_RightDown += (Last_X - e.X) / (Me.Width / (Math.Abs(X_RightDown - X_LeftTop)))
         Y_RightDown += -(Last_Y - e.Y) / (Me.Width / (Math.Abs(Y_LeftTop - Y_RightDown)))
-            Scale(X_LeftTop, Y_LeftTop, X_RightDown, Y_RightDown, g1)
-            print(g1)
+        Scale(X_LeftTop, Y_LeftTop, X_RightDown, Y_RightDown, g1)
+        print(g1)
     End Sub
 
     Private Sub Form1_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
