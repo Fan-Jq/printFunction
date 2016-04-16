@@ -1,11 +1,8 @@
 ﻿Imports System.Drawing.Drawing2D
 Public Class Form1
     Dim X_LeftTop As Single, Y_LeftTop As Single, X_RightDown As Single, Y_RightDown As Single
-    Dim Last_X As Single, Last_Y As Single, x2, y2
-    Dim s As Integer
-    Dim px1 As Integer, py1 As Integer
+    Dim Last_X As Single, Last_Y As Single
     Dim g1 As Graphics
-
     Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
         If e.KeyCode = Keys.Home Then
             X_LeftTop = -20
@@ -17,8 +14,6 @@ Public Class Form1
             print(g1)
         End If
     End Sub
-
-    
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         X_LeftTop = -20
         Y_LeftTop = 20
@@ -27,7 +22,6 @@ Public Class Form1
         g1 = Me.CreateGraphics()
         Scale(X_LeftTop, Y_LeftTop, X_RightDown, Y_RightDown, g1)
     End Sub
-
     Private Sub Form1_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         Last_X = e.X
         Last_Y = e.Y
@@ -41,7 +35,6 @@ Public Class Form1
         Scale(X_LeftTop, Y_LeftTop, X_RightDown, Y_RightDown, g1)
         print(g1)
     End Sub
-
     Private Sub Form1_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
         g1 = Me.CreateGraphics()
         If e.Delta > 0 Then
@@ -61,14 +54,13 @@ Public Class Form1
     Private Sub Form1_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         print(g1)
     End Sub
-    Public Function func1(ByRef x As Single)
-        Dim y As Single
-        y = Math.Sqrt(1 + 1 / (x ^ 2)) * 8 * x / (x ^ 2 + 4)
-        Return y
-    End Function
     Public Function func(ByRef x As Single)
         Dim y As Single
-        y = Math.Sqrt(1 + x ^ 2) * 8 * x / (1 + 4 * x ^ 2)
+        Try
+            y = Math.Tan(x)
+        Catch ex As System.OverflowException
+            y = 0
+        End Try
         Return y
     End Function
     Public Sub print(ByRef g As Graphics)
@@ -90,7 +82,11 @@ Public Class Form1
             Dim y As Single = func(x)
             Dim x2 As Single = x + 0.1
             Dim y2 As Single = func(x2)
-            g.DrawLine(myPen, x, y, x2, y2)
+            Try
+                g.DrawLine(myPen, x, y, x2, y2)
+            Catch ex As System.OverflowException
+                g.DrawLine(myPen, 0, 0, 0, 0)
+            End Try
         Next
     End Sub
     Private Sub Form1_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
